@@ -6,7 +6,7 @@ import Ilustration from '../components/Ilustration'
 
 function Register() {
   return (
-    <div className='grid md:grid-cols-2 sm:grid-cols-1 min-h-screen h-full '>
+    <div className='grid grid-cols-1 md:grid-cols-2 min-h-screen h-full'>
         <div className='justify-items-center content-center'>
             <Logo/>
             <FormTitle text='Lengkapi data untuk membuat akun'/>

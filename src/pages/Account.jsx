@@ -1,13 +1,13 @@
 import React from 'react'
 import Header from '../components/Header'
 
-function TopUp() {
+function Akun() {
   return (
     <div>
       <Header/>
-      TopUp
+      Akun
     </div>
   )
 }
 
-export default TopUp
+export default Akun

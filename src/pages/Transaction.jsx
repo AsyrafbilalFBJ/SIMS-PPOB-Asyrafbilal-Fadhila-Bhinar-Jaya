@@ -1,13 +1,13 @@
 import React from 'react'
 import Header from '../components/Header'
 
-function TopUp() {
+function Transaksi() {
   return (
     <div>
       <Header/>
-      TopUp
+      Transaksi
     </div>
   )
 }
 
-export default TopUp
+export default Transaksi

@@ -11,6 +11,7 @@ export default {
     extend: {
       backgroundImage: {
         'ilustrasi': "url('./src/assets/images/Illustrasi Login.png')",
+        'saldo': "url('./src/assets/images/Background Saldo.png')",
       },
     },
   },

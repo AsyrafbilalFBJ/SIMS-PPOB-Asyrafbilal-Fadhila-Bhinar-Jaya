@@ -9,6 +9,7 @@ import Transaction from "./pages/Transaction"
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Authenticated from './components/Authenticated';
+import TransactionHistory from './pages/TransactionHistory';
 
 
 function App() {
@@ -21,10 +22,10 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/' element={<Authenticated><Home /></Authenticated>} />
-            <Route path='/top-up' element={<TopUp />} />
-            <Route path='/transaction' element={<p>Transaction</p>} />
-            <Route path='/history' element={<Transaction />} />
-            <Route path='/account' element={<Account />} />
+            <Route path='/top-up' element={<Authenticated><TopUp /></Authenticated>} />
+            <Route path='/transaction' element={<Authenticated><Transaction /></Authenticated>} />
+            <Route path='/transaction/history' element={<Authenticated><TransactionHistory /></Authenticated>} />
+            <Route path='/account' element={<Authenticated><Account /></Authenticated>} />
           </Routes>
         </BrowserRouter>
       </PersistGate>

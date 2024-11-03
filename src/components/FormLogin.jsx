@@ -39,6 +39,7 @@ function FormLogin() {
                 navigate('/');
             }, 2000);
             dispatch(clearMessage());
+            console.log(token);
         }
     }, [successMessage, navigate, dispatch]);
     

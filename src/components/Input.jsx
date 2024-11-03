@@ -1,17 +1,17 @@
 "use client";
 
-import { Label, TextInput } from "flowbite-react";
+import { Label } from "flowbite-react";
 import { useState } from "react";
 import { FaRegEyeSlash, FaRegEye  } from "react-icons/fa6";
 
-function Input({id, label, type, Icon, placeholder, value, onChange, errorMessage}) {
+function Input({id, label, type, Icon, placeholder, value, onChange, errorMessage, readOnly}) {
     const [showPassword, setShowPassword] = useState(false);
 
     return (
-        <div className="max-w-md my-7">
+        <div className="max-w-full my-7">
             {label && (
                 <div className="mb-2 block">
-                    <Label htmlFor={id} value={label} className="text-cyan-600" />
+                    <label htmlFor={id} className="text-black text-sm">{label}</label>
                 </div>
             )}
             <div className="relative">
@@ -29,6 +29,7 @@ function Input({id, label, type, Icon, placeholder, value, onChange, errorMessag
                             type === "password" && errorMessage && "border-red-500 focus:border-red-500 focus:ring-red-500"
                         }
                         `}
+                    readOnly={readOnly && `${readOnly}`}
                 />
                 {type === "password" && (
                     <span

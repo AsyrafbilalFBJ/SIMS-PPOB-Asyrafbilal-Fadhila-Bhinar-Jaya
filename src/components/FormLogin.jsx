@@ -25,7 +25,7 @@ function FormLogin() {
     const handleSubmit = async (e, values = {email, password}) =>{
         e.preventDefault();
         console.log(values);
-        dispatch(clearMessage());
+        // dispatch(clearMessage());
         dispatch(asyncLoginAction(values));
     };
 
@@ -35,10 +35,10 @@ function FormLogin() {
   
     useEffect(() => {
         if (successMessage && token) {
-            setTimeout(() => {
+            // setTimeout(() => {
                 navigate('/');
-            }, 2000);
-            dispatch(clearMessage());
+            // }, 2000);
+            // dispatch(clearMessage());
             console.log(token);
         }
     }, [successMessage, navigate, dispatch]);

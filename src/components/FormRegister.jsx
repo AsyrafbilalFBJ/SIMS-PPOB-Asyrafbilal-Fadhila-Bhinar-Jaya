@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { asyncRegisterAction } from '../redux/actions/auth';
 import { clearMessage } from '../redux/reducers/auth';
+import ModalDialog from './ModalDialog';
 
 
 function FormRegister() {
@@ -21,11 +22,12 @@ function FormRegister() {
     const [lastName, setLastName] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPass, setConfirmPass] = useState('');
+    const [showSuccess, setShowSuccess] = useState(successMessage ? true :false);
 
     const handleSubmit = async (e, values = {email, firstName, lastName, password}) =>{
         e.preventDefault();
         console.log(values);
-        dispatch(clearMessage());
+        // dispatch(clearMessage());
         dispatch(asyncRegisterAction(values));
     };
 
@@ -35,14 +37,20 @@ function FormRegister() {
   
     useEffect(() => {
         if (successMessage) {
-            setTimeout(() => {
-                navigate('/login');
-            }, 2000);
-            dispatch(clearMessage());
+            // setTimeout(() => {
+            //     navigate('/login');
+            // }, 2000);
+            // dispatch(clearMessage());
+            setShowSuccess(true);
         }
     }, [successMessage, navigate, dispatch]);
 
     console.log(errorMessage);
+  
+    const navToLogin = () => {
+      dispatch(clearMessage());
+      navigate('/login');
+    }
   return (
     <div className='w-96'>
         <form onSubmit={handleSubmit}>
@@ -114,6 +122,16 @@ function FormRegister() {
                 <button onClick={removeError} className='text-red-500 content-center hover:bg-red-200 p-1 rounded'><MdClear/></button>
             </div>
         )}
+
+        {successMessage &&
+            <ModalDialog 
+                show={showSuccess}
+                onClick={() => setShowSuccess(false)}
+                type="success"
+                message={successMessage}
+                nextAct={navToLogin}
+            />
+        }
     </div>
   )
 }

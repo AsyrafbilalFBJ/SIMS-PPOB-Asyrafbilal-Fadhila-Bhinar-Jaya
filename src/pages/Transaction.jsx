@@ -8,6 +8,7 @@ import Hero from '../components/Hero';
 import Input from '../components/Input';
 import { MdMoney } from "react-icons/md";
 import Button from '../components/Button';
+import ModalDialog from '../components/ModalDialog';
 
 function Transaction() {
   const transaction = useSelector(state => state.transaction.data);
@@ -16,6 +17,9 @@ function Transaction() {
   const navigate = useNavigate();
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   useEffect(()=>{
     if(!transaction){
@@ -35,12 +39,16 @@ function Transaction() {
       const {data} = await http(token).post('/transaction', formJson);
       if(data.status === 0){
         setSuccessMessage(data.message);
-        setTimeout(() => {
-          navigate('/transaction/history');
-        }, 3000);
+        // setTimeout(() => {
+        //   navigate('/transaction/history');
+        // }, 3000);
         dispatch(getBalanceAction(token));
+        setShowConfirm(false);
+        setShowSuccess(true);
       }else{
         setErrorMessage(data.message);
+        setShowConfirm(false);
+        setShowError(true);
       }
       
     } catch (error) {
@@ -73,8 +81,38 @@ function Transaction() {
           </Input>
           <Button
               text="Bayar"
-              onClick={doTransaction}
+              type="button"
+              onClick={() => setShowConfirm(true)}
           />
+
+          <ModalDialog 
+              show={showConfirm}
+              onClick={() => setShowConfirm(false)}
+              type="confirm"
+              nominal={transaction.service_tariff}
+              service={transaction.service_name}
+              nextAct={doTransaction}
+          />
+          {successMessage &&
+              <ModalDialog 
+                  show={showSuccess}
+                  onClick={() => setShowSuccess(false)}
+                  type="success"
+                  nominal={transaction.service_tariff}
+                  service={transaction.service_name}
+                  nextAct={() => navigate('/')}
+              />
+          }
+          {errorMessage &&
+              <ModalDialog 
+                  show={showError}
+                  onClick={() => setShowError(false)}
+                  type="error"
+                  nominal={transaction.service_tariff}
+                  service={transaction.service_name}
+                  nextAct={() => navigate('/')}
+              />
+          }
       </div>
     </div>
   )

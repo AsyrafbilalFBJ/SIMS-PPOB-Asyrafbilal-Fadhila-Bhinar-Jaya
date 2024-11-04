@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import http from '../helpers/http';
 import { getBalanceAction } from '../redux/actions/balance';
+import ModalDialog from './ModalDialog';
 
 function FormTopUp() {
     const dispatch = useDispatch();
@@ -16,6 +17,9 @@ function FormTopUp() {
     const [successMessage, setSuccessMessage] = useState('');
     const token = useSelector((state) => state.auth.token.token);
     const [topup, setTopUp] = useState(null);
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [showError, setShowError] = useState(false);
     const nominal = [
         {
           id: 1,
@@ -59,12 +63,16 @@ function FormTopUp() {
             const { data } = await http(token).post('/topup', formJson);
             if(data.status === 0){
                 setSuccessMessage(data.message);
-                setTimeout(() => {
-                navigate('/transaction/history');
-                }, 3000);
+                // setTimeout(() => {
+                // navigate('/transaction/history');
+                // }, 3000);
                 dispatch(getBalanceAction(token));
+                setShowConfirm(false);
+                setShowSuccess(true);
             }else{
                 setErrorMessage(data.message);
+                setShowConfirm(false);
+                setShowError(true);
             }
         } catch (error) {
             const message = error?.response?.data?.message;
@@ -78,7 +86,7 @@ function FormTopUp() {
 
     return (
         <div className="w-full flex flex-col items-center lg:items-start gap-3 py-10">
-            <form onSubmit={handleTopUp} className='w-full'>
+            <form className='w-full'>
                 <div className='grid lg:grid-cols-8 grid-cols-1 gap-5'>
                     <div className='lg:col-start-1 lg:col-end-6'>
                         <div className='grid grid-rows-2'>
@@ -93,6 +101,8 @@ function FormTopUp() {
                             </Input>
                             <Button
                                 text="Top Up"
+                                type="button"
+                                onClick={() => setShowConfirm(true)}
                                 disabled={isButtonDisabled}
                             />
                         </div>
@@ -120,6 +130,33 @@ function FormTopUp() {
                         </div>
                     </div>
                 </div>
+                
+                <ModalDialog 
+                    show={showConfirm}
+                    onClick={() => setShowConfirm(false)}
+                    type="confirm"
+                    nominal={topup}
+                    nextAct={handleTopUp}
+                />
+                {successMessage &&
+                    <ModalDialog 
+                        show={showSuccess}
+                        onClick={() => setShowSuccess(false)}
+                        type="success"
+                        nominal={topup}
+                        nextAct={() => navigate('/')}
+                    />
+                }
+                {errorMessage &&
+                    <ModalDialog 
+                        show={showError}
+                        onClick={() => setShowError(false)}
+                        type="error"
+                        nominal={topup}
+                        nextAct={() => navigate('/')}
+                    />
+                }
+
             </form>
         </div>
     )

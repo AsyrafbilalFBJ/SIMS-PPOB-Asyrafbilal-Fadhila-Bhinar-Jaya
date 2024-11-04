@@ -15,7 +15,7 @@ function Balance() {
       }, [token]);
 
   return (
-    <div className="w-full lg:w-[800px] flex flex-col gap-2 rounded-2xl bg-saldo bg-cover bg-no-repeat p-6 shadow-md">
+    <div className="w-full lg:w-[800px] flex flex-col gap-2 rounded-2xl bg-[url('/src/assets/images/Background-Saldo.png')] bg-cover bg-no-repeat p-6 shadow-md">
         <p className="text-sm text-white">Saldo anda</p>
         <div className='flex gap-1 items-center'>
         <p className="text-4xl text-white font-semibold">Rp</p>

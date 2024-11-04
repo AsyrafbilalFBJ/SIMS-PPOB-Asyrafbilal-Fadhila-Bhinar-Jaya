@@ -120,13 +120,15 @@ function Account() {
                 }
               </div>
 
-                <label className={`bottom-0 right-0 absolute w-7 h-7 shadow-md bg-white border-2 border-gray-300 dark:border-gray-800 rounded-full content-center cursor-pointer
-                  ${!edit &&
-                    'bg-gray-300 border-gray-300'
+                <label className={`bottom-0 right-0 absolute w-7 h-7 shadow-md border-2  border-gray-300 dark:border-gray-800 rounded-full content-center cursor-pointer
+                  ${edit ?
+                    'bg-white' :
+                    'bg-gray-300'
                   }
                   `}>
                   <MdEdit className={`mx-auto
-                    ${!edit &&
+                    ${edit ?
+                      'text-black':
                       'text-white'
                     }
                     `}/>

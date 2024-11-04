@@ -1,5 +1,5 @@
 import React from 'react'
-import Logo from '../components/logo'
+import Logo from '../components/Logo'
 import FormTitle from '../components/FormTitle'
 import FormRegister from '../components/FormRegister'
 import Ilustration from '../components/Ilustration'
